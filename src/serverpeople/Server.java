@@ -5,17 +5,27 @@
  */
 package serverpeople;
 
+import java.net.ServerSocket;
+import serverpeople.proxy.ServerPeopleProxy;
+
 /**
  *
  * @author Israel Dago
  */
 public class Server {
-
+    private static ServerSocket ss;
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        try {
+            ss = new ServerSocket(3233);
+            while (true) {                
+                new ServerPeopleProxy(ss.accept()).start();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }
